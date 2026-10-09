@@ -48,7 +48,7 @@ The device should appear as `device`, not `unauthorized` or `offline`.
 Run from the repository root so the bot can find its templates:
 
 ```powershell
-python vision4.py
+python vision4_miner_bot.py
 ```
 
 The bot pauses for five seconds before starting. Stop it with `Ctrl+C`. It writes harvest records to a timestamped file in `statistics/`.
