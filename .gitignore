@@ -1,2 +1,18 @@
-*.csv
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local configuration and environment files
+.env
+
+# Runtime data
+statistics/*.csv
+!statistics/.gitkeep
+stats_*.csv
+
+# Generated analytics
+analytics_output/*.png
+analytics_output/session_analytics_output/
 toadd.md

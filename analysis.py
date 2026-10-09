@@ -45,7 +45,6 @@ def generate_dashboard(df, session_title, output_filename):
         print(f"[WARN] Dataframe for '{session_title}' is empty. Skipping visual rendering.")
         return
 
-    # Ensure datetime columns and hours are extracted cleanly
     df = df.copy()
     df['timestamp'] = pd.to_datetime(df['timestamp'])
     df['hour'] = df['timestamp'].dt.hour
@@ -58,13 +57,12 @@ def generate_dashboard(df, session_title, output_filename):
     earnings_filtered = earnings[earnings > 0]
     total_money = earnings.sum()
 
-    # Initialize a high-fidelity visual layout matrix
     fig = plt.figure(figsize=(18, 13))
     fig.suptitle(f"MINER BOT PERFORMANCE DASHBOARD\nSource: {session_title}", fontsize=16, fontweight='bold', y=0.98)
     
     gs = fig.add_gridspec(3, 3, height_ratios=[1.1, 1.0, 1.0])
 
-    # PIE CHART 1: Quantity Proportions (All nodes included)
+    # PIE CHART 1: Quantity Proportions
     ax_pie_qty = fig.add_subplot(gs[0, 0])
     labels_qty = [f"{ore.upper()} ({count})" for ore, count in counts.items()]
     ax_pie_qty.pie(
@@ -77,7 +75,7 @@ def generate_dashboard(df, session_title, output_filename):
     )
     ax_pie_qty.set_title("Harvested Node Proportions", fontsize=12, fontweight='bold', pad=10)
 
-    # PIE CHART 2: Financial Contribution ( Profitable nodes only )
+    # PIE CHART 2: Financial Contribution
     ax_pie_cash = fig.add_subplot(gs[0, 1])
     if not earnings_filtered.empty:
         labels_cash = [f"{ore.upper()} (${val:,})" for ore, val in earnings_filtered.items()]
@@ -93,7 +91,7 @@ def generate_dashboard(df, session_title, output_filename):
         ax_pie_cash.text(0.5, 0.5, "Zero Market Value Collected", ha='center', va='center', color='red', fontsize=12)
     ax_pie_cash.set_title("Revenue Distribution (Virtual Currency)", fontsize=12, fontweight='bold', pad=10)
 
-    # METRIC SUMMARY BOX (Integrated Session Metadata)
+    # METRIC SUMMARY BOX
     ax_summary = fig.add_subplot(gs[0, 2])
     ax_summary.axis('off')
     
@@ -110,7 +108,6 @@ def generate_dashboard(df, session_title, output_filename):
     )
 
     # REGION: TIME DURATION NORMALIZATION LOGIC
-    # Identify continuous independent sessions (splits concatenated data securely)
     session_marks = (df['timestamp'].diff() > pd.Timedelta(minutes=30)) | (df['runtime_minutes'].diff() < 0)
     df['session_id'] = session_marks.cumsum()
     
@@ -132,8 +129,7 @@ def generate_dashboard(df, session_title, output_filename):
                 total_hourly_mins[h] += duration
             current += pd.Timedelta(hours=1)
 
-    # HOURLY PERFORMANCE HISTOGRAMS (Normalized Relative Frequency)
-    # Axis configuration helper function
+    # HOURLY PERFORMANCE HISTOGRAMS
     def format_histogram_axis(ax, title, color_theme):
         ax.set_title(title, fontsize=11, fontweight='semibold')
         ax.set_xticks(range(24))
@@ -142,7 +138,7 @@ def generate_dashboard(df, session_title, output_filename):
         ax.set_ylabel("Avg Ores / Hour", fontsize=9)
         ax.grid(axis='y', linestyle='--', alpha=0.5)
 
-    # 1. Composite Timeline (All Ores Aggregated)
+    # 1. Composite Timeline
     ax_hist_all = fig.add_subplot(gs[1, 0])
     counts_all = df['hour'].value_counts().reindex(range(24), fill_value=0)
     hourly_rate_all = [
