@@ -19,8 +19,8 @@ A Python project for automating resource gathering in a mobile game and analyzin
 | `vision4.py` | ADB controls, image matching, harvesting loop, and CSV logging |
 | `analysis.py` | CSV analysis and dashboard generation |
 | `templates/` | Image templates used by the bot |
-| `statistics/` | Runtime harvest logs; generated CSV files are not tracked |
-| `analytics_output/` | Generated dashboard images |
+| `statistics/` | Runtime harvest logs; example CSV files are included |
+| `analytics_output/` | Generated dashboard images, including example outputs |
 
 ## Requirements
 
@@ -63,7 +63,7 @@ After collecting one or more logs, run:
 python analysis.py
 ```
 
-The analytics script reads files matching `statistics/stats_*.csv` and saves a combined dashboard and per-log dashboards in `analytics_output/`. The expected CSV columns are:
+The analytics script reads files matching `statistics/stats_*.csv` and saves a combined dashboard and per-log dashboards in `analytics_output/`. It uses pandas to process the logs and Matplotlib to plot ore counts, estimated revenue, and hourly harvest rates. The expected CSV columns are:
 
 | Column | Description |
 | --- | --- |

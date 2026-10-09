@@ -3,16 +3,11 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+**/.ipynb_checkpoints/
 
 # Local configuration and environment files
 .env
 
-# Runtime data
-statistics/*.csv
-!statistics/.gitkeep
-stats_*.csv
+# Sample statistics and generated dashboard images are intentionally tracked.
 
-# Generated analytics
-analytics_output/*.png
-analytics_output/session_analytics_output/
 toadd.md
