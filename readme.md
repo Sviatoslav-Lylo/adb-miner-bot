@@ -63,7 +63,13 @@ After collecting one or more logs, run:
 python analysis.py
 ```
 
-The analytics script reads files matching `statistics/stats_*.csv` and saves a combined dashboard and per-log dashboards in `analytics_output/`. It uses pandas to process the logs and Matplotlib to plot ore counts, estimated revenue, and hourly harvest rates. The expected CSV columns are:
+The analytics script reads files matching `statistics/stats_*.csv` and saves a combined dashboard and per-log dashboards in `analytics_output/`. It uses pandas to process the logs and Matplotlib to plot ore counts, estimated revenue, and hourly harvest rates. Example output for all recorded sessions is shown below:
+
+![Global performance dashboard](analytics_output/global_performance_dashboard.png)
+
+This combined dashboard aggregates results across every session in `statistics/`, making it easy to compare total ore output, revenue estimates, and hourly efficiency trends over time. Each session can also be reviewed individually in the per-log PNG files under `analytics_output/session_analytics_output/`.
+
+The expected CSV columns are:
 
 | Column | Description |
 | --- | --- |
